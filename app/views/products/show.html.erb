@@ -1,0 +1,13 @@
+<h1>
+  Listing Name: <%= @product.name %>
+</h1>
+<p>
+  Description: <%= @product.description %>
+</p>
+<br/>
+<p>
+  Price: <%= @product.price %>$
+</p>
+
+<%= link_to "Edit", edit_product_path(@product) %>
+<%= link_to "Delete", product_path(@product) %>

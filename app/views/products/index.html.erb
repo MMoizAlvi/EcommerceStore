@@ -1,0 +1,14 @@
+<h1>All Products</h1>
+
+<ol>
+  <% @products.each do |product| %>
+      <li>
+        <h2>listing name: </h2><%= link_to product.name, product %>
+        <h2>Price: </h2><%= product.price %>$
+        <h2>Description: </h2><%= product.description %>
+      </li>
+  <% end %>
+</ol>
+
+<%= link_to "New Product", new_product_path %>
+<%= link_to "Home", user_session_path%>
