@@ -3,15 +3,16 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
-  has_many :products
-  has_many :orders
-  has_one :cart
+  has_many :products, dependent: :destroy
+  has_many :comments, dependent: :destroy
+  has_many :orders, dependent: :destroy
+  has_one :cart, dependent: :destroy
   has_one_attached :avatar
   after_commit :add_default_avatar, on: %i[create update]
 
   def avatar_thumbnail
     if avatar.attached?
-      avatar.variant(resize: "150x150!").processed
+      avatar.variant(resize: "60x60!").processed
     else
       '/default_profile.jpg'
     end

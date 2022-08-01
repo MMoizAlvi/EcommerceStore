@@ -1,29 +1,39 @@
-<%= form_with model: product do |form| %>
-  <div>
-    <%= form.label :name %><br>
-    <%= form.text_field :name %>
-      <% product.errors.full_messages_for(:name).each do |message| %>
-      <div><%= message %></div>
-    <% end %>
-  </div>
+<div class="container">
+  <%= form_with model: product do |form| %>
+    <div>
+      <%= form.label :name, class: "form-label" %><br>
+      <%= form.text_field :name, class: "form-control" %>
+        <% product.errors.full_messages_for(:name).each do |message| %>
+        <div><%= message %></div>
+      <% end %>
+    </div>
 
-  <div>
-    <%= form.label :price %><br>
-    <%= form.text_area :price %>
-      <% product.errors.full_messages_for(:price).each do |message| %>
-      <div><%= message %></div>
-    <% end %>
-  </div>
+    <div>
+      <%= form.label :price, class: "form-label"%><br>
+      <%= form.text_area :price, class: "form-control" %>
+        <% product.errors.full_messages_for(:price).each do |message| %>
+        <div><%= message %></div>
+      <% end %>
+    </div>
 
-  <div>
-    <%= form.label :description %><br>
-    <%= form.text_area :description %>
-      <% product.errors.full_messages_for(:description).each do |message| %>
-      <div><%= message %></div>
-    <% end %>
-  </div>
+    <div>
+      <%= form.label :description, class: "form-label" %><br>
+      <%= form.text_area :description, class: "form-control" %>
+        <% product.errors.full_messages_for(:description).each do |message| %>
+        <div><%= message %></div>
+      <% end %>
+    </div>
 
-  <div>
-    <%= form.submit %>
-  </div>
-<% end %>
+    <div>
+      <%= form.label :imgs, class: "form-label" %>
+      <%= form.file_field :imgs, multiple: true, direct_upload: true %>
+    </div>
+
+    <div>
+      <%= form.submit %>
+    </div>
+  <% end %>
+</div>
+<div class="back">
+  <%= link_to "back to products", products_path , class: "btn btn-primary"%>
+</div>

@@ -1,0 +1,8 @@
+<% if @comment.errors.any? %>
+    document.querySelector('#error_explanation') ? document.querySelector('#error_explanation').remove() : null ;
+    document.querySelector('#comments-form').insertAdjacentHTML('afterbegin', '<%= escape_javascript(render "_validation_messages", object: @comment) %>');
+<% else %>
+    document.querySelector('#error_explanation') ? document.querySelector('#error_explanation').remove() : null ;
+    document.querySelector('#comments').insertAdjacentHTML('afterbegin', '<%= escape_javascript(render @comment) %>') ;
+    document.querySelector('#comments-form').reset();
+<% end %>

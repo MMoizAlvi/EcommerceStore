@@ -13,3 +13,25 @@
  *= require_tree .
  *= require_self
  */
+.baner{
+  display: flex;
+  padding-right: 20px;
+}
+
+.info{
+  display: flex;
+  gap: 20px;
+  padding-left: 20px;
+  padding-top: 10px;
+}
+
+.title{
+  color: #ffc107;
+  padding-left: 20px;
+}
+
+.notice, .alert{
+  color: #e9adad;
+  display: flex;
+  justify-content: center;
+}

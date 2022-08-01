@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_07_21_130318) do
+ActiveRecord::Schema.define(version: 2022_07_27_100713) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,13 +36,29 @@ ActiveRecord::Schema.define(version: 2022_07_21_130318) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
-  create_table "carts", force: :cascade do |t|
-    t.integer "quantity"
-    t.bigint "user_id"
+  create_table "cart_orders", force: :cascade do |t|
+    t.bigint "cart_id"
+    t.bigint "order_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cart_id"], name: "index_cart_orders_on_cart_id"
+    t.index ["order_id"], name: "index_cart_orders_on_order_id"
+  end
+
+  create_table "cart_products", force: :cascade do |t|
+    t.bigint "cart_id"
     t.bigint "product_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["product_id"], name: "index_carts_on_product_id"
+    t.integer "quantity", default: 0
+    t.index ["cart_id"], name: "index_cart_products_on_cart_id"
+    t.index ["product_id"], name: "index_cart_products_on_product_id"
+  end
+
+  create_table "carts", force: :cascade do |t|
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_carts_on_user_id"
   end
 
@@ -51,7 +67,9 @@ ActiveRecord::Schema.define(version: 2022_07_21_130318) do
     t.bigint "product_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "user_id"
     t.index ["product_id"], name: "index_comments_on_product_id"
+    t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
   create_table "cupons", force: :cascade do |t|
@@ -75,12 +93,10 @@ ActiveRecord::Schema.define(version: 2022_07_21_130318) do
     t.float "total_amount"
     t.float "discounted_amount"
     t.bigint "user_id"
-    t.bigint "product_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "cupon_id"
     t.index ["cupon_id"], name: "index_orders_on_cupon_id"
-    t.index ["product_id"], name: "index_orders_on_product_id"
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
@@ -117,13 +133,16 @@ ActiveRecord::Schema.define(version: 2022_07_21_130318) do
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "carts", "products"
+  add_foreign_key "cart_orders", "carts"
+  add_foreign_key "cart_orders", "orders"
+  add_foreign_key "cart_products", "carts"
+  add_foreign_key "cart_products", "products"
   add_foreign_key "carts", "users"
   add_foreign_key "comments", "products"
+  add_foreign_key "comments", "users"
   add_foreign_key "order_products", "orders"
   add_foreign_key "order_products", "products"
   add_foreign_key "orders", "cupons"
-  add_foreign_key "orders", "products"
   add_foreign_key "orders", "users"
   add_foreign_key "products", "users"
 end

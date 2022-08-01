@@ -1,13 +1,40 @@
-<h1>
-  Listing Name: <%= @product.name %>
-</h1>
-<p>
-  Description: <%= @product.description %>
-</p>
-<br/>
-<p>
-  Price: <%= @product.price %>$
-</p>
-
-<%= link_to "Edit", edit_product_path(@product) %>
-<%= link_to "Delete", product_path(@product) %>
+<div class="card container">
+  <div class="row images">
+    <% ( 0...@product.imgs.count).each do |img| %>
+      <div  class= "row-lg-4 row-md-4 row-xs-4 thumb", style = " width: 400px; height:400px;" >
+          <%= cl_image_tag(@product.imgs[img].key, style: 'width:100%') if @product.imgs.attached? %>
+      </div>
+    <% end %>
+  </div>
+  <div class="card-body btns">
+    <div>
+      <%= button_to "Add to Cart", product_carts_path(@product) if policy(@product).create?  %>
+    </div>
+    <div>
+      <%= button_to "Show Cart", product_cart_path(@product), method: "get" %>
+    </div>
+  </div>
+  <div>
+    <ul class="list-group list-group-flush">
+    <li class="list-group-item">Listing Name: <%= @product.name %></li>
+    <li class="list-group-item">Serial_no: dev-<%= @product.serial_no %></li>
+    <li class="list-group-item">Description: <%= @product.description %></li>
+    <li class="list-group-item">Price: <%= @product.price %>$</li>
+    </ul>
+  </div>
+    <% if user_signed_in? %>
+      <%= link_to "Edit", edit_product_path(@product) if policy(@product).edit? %>
+      <%= button_to "Delete", product_path(@product), method: :delete if policy(@product).destroy? %>
+      <h3>Reviews</h3>
+      <div id="comments">
+        <%= render @product.comments%>
+      </div>
+      <% if policy(@product).show? %>
+        <h4>Add a review:</h4>
+        <%= render 'comments/form' %>
+      <% end %>
+    <% end %>
+  <div >
+    <%= link_to "back to products", products_path , class: "btn btn-primary"%>
+  </div>
+</div>
