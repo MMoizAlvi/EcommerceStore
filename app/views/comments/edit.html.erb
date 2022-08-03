@@ -1,11 +1,12 @@
-<h1>Edit comment</h1>
+<div class="container">
+  <h1>Edit comment</h1>
 
-<%= form_for([@product, @comment])  do |form| %>
- <p>
-    <%= form.text_area :body %>
-  </p>
-  <div>
-    <%= form.submit %>
-  </div>
-<% end %>
-
+  <%= form_for([@product, @comment])  do |form| %>
+  <p>
+      <%= form.text_area :body, class: "form-control-lg" %>
+    </p>
+    <div>
+      <%= form.submit %>
+    </div>
+  <% end %>
+</div>

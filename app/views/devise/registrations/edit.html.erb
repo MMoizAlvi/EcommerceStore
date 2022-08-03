@@ -5,7 +5,7 @@
     <%= render "devise/shared/error_messages", resource: resource %>
 
     <div class="field">
-      <%= cl_image_tag(current_user.avatar_thumbnail.key) if resource.avatar.attached? %>
+      <%= cl_image_tag(current_user.avatar_thumbnail) if resource.avatar.attached? %>
     </div>
 
     <div class="field">
@@ -14,12 +14,12 @@
 
     <div class="field">
       <%= f.label :first_name, class: "form-label" %><br />
-      <%= f.text_field :first_name , class: "form-control"%>
+      <%= f.text_field :first_name, autocomplete: "first_name" , class: "form-control"%>
     </div>
 
     <div class="field">
       <%= f.label :last_name, class: "form-label" %><br />
-      <%= f.text_field :last_name, class: "form-control" %>
+      <%= f.text_field :last_name, autocomplete: "last_name", class: "form-control" %>
     </div>
 
     <div class="field">

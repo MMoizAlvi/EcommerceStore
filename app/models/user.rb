@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
@@ -12,9 +14,9 @@ class User < ApplicationRecord
 
   def avatar_thumbnail
     if avatar.attached?
-      avatar.variant(resize: "60x60!").processed
+      avatar.variant(resize: "70x70!").processed.service_url
     else
-      '/default_profile.jpg'
+      '/default.jpg'
     end
   end
 
@@ -25,10 +27,10 @@ class User < ApplicationRecord
       avatar.attach(
         io: File.open(
           Rails.root.join(
-            'app', 'assets', 'images', 'default_profile.jpg'
+            'app', 'assets', 'images', 'default.jpg'
           )
         ),
-        filename: 'default_profile.jpg',
+        filename: 'default.jpg',
         content_type: 'image/jpg'
       )
     end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CartPolicy < ApplicationPolicy
   class Scope < Scope
     # NOTE: Be explicit about which records you allow access to!
@@ -5,5 +7,4 @@ class CartPolicy < ApplicationPolicy
     #   scope.all
     # end
   end
-
 end
