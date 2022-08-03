@@ -12,10 +12,10 @@ class OrdersController < ApplicationController
   def create
     if @order.save
       @order.products << @products
-      cart_order = @order.cart_orders.create(cart: @cart, order_id: @order)
       flash[:notice] = 'Order Created!'
       redirect_to product_cart_order_path(@order, @cart, params[:product_id])
     else
+      flash.now[:error] = "#{@order.errors.full_messages.to_sentence}"
       render :new
     end
   end
@@ -42,17 +42,17 @@ class OrdersController < ApplicationController
       @order = Order.find_or_create_by(user: current_user)
     else
       flash[:notice] = 'Please sign_in/sign_up first!'
-      redirect_to user_registration_path
+      redirect_to user_session_path
     end
   end
 
   def find_user_cart
-    @cart = Cart.find(session[:cart_id])
+    @cart = cart
     @products = @cart.products
   end
 
   def compute_user_order
-    @cart = Cart.find(session[:cart_id])
+    @cart = cart
     @prices = @cart.products.pluck(:price)
     @quantity = @cart.cart_products.pluck(:quantity)
     @item_total = @prices.zip(@quantity).map { |pair| pair.reduce(&:*) }

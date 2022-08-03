@@ -33,7 +33,7 @@ gem 'jquery-rails', '~> 4.3', '>= 4.3.3'
 gem 'rails-ujs', '~> 0.1.0'
 # gem 'jquery-rails'
 # Use ActiveStorage variant
-#gem 'mini_magick', '~> 4.8'
+# gem 'mini_magick', '~> 4.8'
 gem 'image_processing', '~> 1.12', '>= 1.12.2'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development

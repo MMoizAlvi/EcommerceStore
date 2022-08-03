@@ -26,6 +26,7 @@ class CommentsController < ApplicationController
       flash[:notice] = 'comment updated successfully!'
       redirect_to product_path(@product)
     else
+      flash.now[:error] = "#{@comment.errors.full_messages.to_sentence}"
       render :edit
     end
   end
@@ -35,7 +36,7 @@ class CommentsController < ApplicationController
       flash[:notice] = 'comment deleted successfully!'
       redirect_to product_path(@product)
     else
-      flash[:notice] = 'Failed to delete a comment!'
+      flash.now[:error] = "#{@comment.errors.full_messages.to_sentence}"
       render :edit
     end
   end

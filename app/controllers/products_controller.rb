@@ -21,9 +21,10 @@ class ProductsController < ApplicationController
   def create
     @product = current_user.products.new(product_params)
     if @product.save
-      flash[:success] = 'Product created successfully!'
+      flash[:notice] = 'Product created successfully!'
       redirect_to product_path(@product)
     else
+      flash.now[:error] = "#{@product.errors.full_messages.to_sentence}"
       render :new
     end
   end
@@ -34,7 +35,7 @@ class ProductsController < ApplicationController
       flash[:success] = 'Product successfully updated!'
       redirect_to product_path(@product)
     else
-      flash[:error] = 'Something went wrong'
+      flash.now[:error] = "#{@product.errors.full_messages.to_sentence}"
       render :edit
     end
   end

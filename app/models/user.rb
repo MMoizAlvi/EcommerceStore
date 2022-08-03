@@ -11,16 +11,21 @@ class User < ApplicationRecord
   has_one :cart, dependent: :destroy
   has_one_attached :avatar
   after_commit :add_default_avatar, on: %i[create update]
+  # after_create :create_user_cart
 
   def avatar_thumbnail
     if avatar.attached?
-      avatar.variant(resize: "70x70!").processed.service_url
+      avatar.variant(resize: '70x70!').processed.service_url
     else
       '/default.jpg'
     end
   end
 
   private
+
+  # def create_user_cart
+  #   Cart.create(user: self)
+  # end
 
   def add_default_avatar
     unless avatar.attached?
