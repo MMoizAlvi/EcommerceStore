@@ -83,6 +83,7 @@ Rails.application.configure do
 
   # Use Cloudinary.
   config.active_storage.service = :cloudinary
+  heroku config:set CLOUDINARY_URL=cloudinary://464867799166842:DQ7i2qT_uSCzBU5ZmTTTsBTeFCA@devsicommerce
 
   # Use a different logger for distributed setups.
   # require 'syslog/logger'
