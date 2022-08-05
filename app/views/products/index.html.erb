@@ -1,8 +1,10 @@
-<div class = "home">
-  <div class="home-btn">
-    <%= link_to "Create your own product!", new_product_path, class: "btn btn-primary"%>
+<% if signed_in? %>
+  <div class = "home">
+    <div class="home-btn">
+      <%= link_to "Create your own product!", new_product_path, class: "btn btn-primary"%>
+    </div>
   </div>
-</div>
+<% end %>
 <h1 class="product">All Products</h1>
 <div >
   <% @products.each do |product| %>

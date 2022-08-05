@@ -19,7 +19,6 @@
       <div>
       <%= form_tag(products_path, method: :get) do %>
         <%= text_field_tag :name, params[:name], id: 'products_search',
-          autocomplete: :on,
           placeholder: 'Search', class: "form-control-sm" %>
         <%= submit_tag 'Search', class: "btn btn-outline-warning" %>
       <% end %>

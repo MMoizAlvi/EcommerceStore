@@ -12,7 +12,7 @@ class CartsController < ApplicationController
       flash[:notice] = 'Added to cart!'
       redirect_to product_cart_path(@cart, @product)
     else
-      flash[:notice] = 'Failed to add to cart!'
+      flash.now[:error] = "#{@cart.cart_product.errors.full_messages.to_sentence}"
       render :new
     end
   end
@@ -22,7 +22,7 @@ class CartsController < ApplicationController
       flash[:notice] = 'Product removed from cart!'
       redirect_to product_cart_path(@cart, params[:product])
     else
-      flash[:notice] = 'Failed to remove from cart!'
+      flash.now[:error] = "#{@cart_product.errors.full_messages.to_sentence}"
       render :edit
     end
   end
@@ -33,7 +33,7 @@ class CartsController < ApplicationController
       flash[:notice] = 'cart updated!'
       redirect_to product_cart_path(@cart, params[:product])
     else
-      flash[:notice] = 'Failed to update cart!'
+      flash.now[:error] = "#{@cart_product.errors.full_messages.to_sentence}"
       render :edit
     end
   end
@@ -46,8 +46,9 @@ class CartsController < ApplicationController
   end
 
   private
+
   def user_cart
-    @cart = Cart.find_by(id: session[:cart_id])
+    @cart = assign_user_cart
   end
 
   def find_product
@@ -58,3 +59,4 @@ class CartsController < ApplicationController
     @cart_product = @cart.cart_products.find_by(product: params[:product])
   end
 end
+

@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
   has_many :products, dependent: :destroy
@@ -12,9 +11,11 @@ class User < ApplicationRecord
   has_one_attached :avatar
   after_commit :add_default_avatar, on: %i[create update]
 
+  validates :first_name, :last_name, presence: true
+
   def avatar_thumbnail
     if avatar.attached?
-      avatar.variant(resize: "70x70!").processed.service_url
+      avatar.variant(resize: '70x70!').processed.service_url
     else
       '/default.jpg'
     end

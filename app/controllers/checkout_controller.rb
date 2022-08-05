@@ -27,10 +27,10 @@ class CheckoutController < ApplicationController
   end
 
   def compute_total
-    if @order.discounted_amount.to_i > 0
-      @total = @order.discounted_amount.to_i
-    else
-      @total = @order.total_amount.to_i
-    end
+    @total = if @order.discounted_amount.to_i.positive?
+               @order.discounted_amount.to_i
+             else
+               @order.total_amount.to_i
+             end
   end
 end
