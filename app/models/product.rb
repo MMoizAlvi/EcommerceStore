@@ -15,12 +15,9 @@ class Product < ApplicationRecord
   validates :price, numericality: { greater_than: 0, less_than: 1_000_000 }
 
   include PgSearch::Model
-  pg_search_scope :search, against: [:name, :description],
+  pg_search_scope :search, against: [:name],
     using: {tsearch: {dictionary: "english"},
-    trigram: {
-                      threshold: 0.1
-                    }
-                  }
+    trigram: { threshold: 0.1 }}
 
   def self.text_search(query)
     if query.present?

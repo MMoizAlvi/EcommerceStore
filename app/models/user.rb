@@ -15,7 +15,6 @@ class User < ApplicationRecord
 
   def avatar_thumbnail
     if avatar.attached?
-      # avatar.variant(resize: '70x70!').processed.key
       avatar.key
     else
       '/default.jpg'
