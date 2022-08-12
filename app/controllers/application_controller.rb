@@ -38,6 +38,7 @@ class ApplicationController < ActionController::Base
     def assign_user_cart
       if signed_in?
         @cart = Cart.find_by(id: session[:cart_id])
+
         if @cart.nil?
           new_cart
         end
@@ -46,6 +47,7 @@ class ApplicationController < ActionController::Base
       else
         new_cart
       end
+
       @cart
     end
 end

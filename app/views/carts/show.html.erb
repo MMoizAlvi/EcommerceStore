@@ -5,7 +5,11 @@
     Guest User Cart
   <% end %>
   <div >
-    <%= button_to "Proceed to Checkout", product_cart_orders_path(params[:product_id], params[:id]), method: "post", class: "btn btn-warning" %><br/>
+    <%= button_to "Proceed to Checkout", product_cart_orders_path(params[:product_id], params[:id]),
+     method: "post",
+      class: "btn btn-warning"
+    %>
+    <br/>
   </div>
     <% @cart.products.each do |product| %>
     <div class="cart">
