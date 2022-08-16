@@ -42,7 +42,7 @@ class ApplicationController < ActionController::Base
         if @cart.nil?
           new_cart
         end
-      elsif session[:cart_id]
+      elsif Cart.find_by(id: session[:cart_id])
         @cart = Cart.find(session[:cart_id])
       else
         new_cart

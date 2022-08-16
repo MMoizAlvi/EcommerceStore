@@ -1,7 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Product, type: :model do
-  let(:product) { FactoryBot.create(:product) }
+  let(:user) { FactoryBot.create(:user) }
+  let(:product) { FactoryBot.create(:product, user: user) }
 
   context 'validations for product name' do
     it { is_expected.to validate_presence_of(:name)}

@@ -39,6 +39,7 @@ group :test do
   gem 'simplecov'
   gem 'selenium-webdriver'
   gem 'webdrivers'
+  gem 'rails-controller-testing'
   # gem 'chromedriver-helper'
 end
 

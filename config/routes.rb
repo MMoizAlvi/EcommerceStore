@@ -13,14 +13,12 @@ Rails.application.routes.draw do
 
     resources :comments
     resources :carts do
-      member do
-        post 'remove_from_cart'
-      end
 
       resources :orders do
-        resources :checkout, only: [:create]
-        member do
-          post 'find_cupon'
+        resources :checkout do
+          collection do
+            post 'find_cupon'
+          end
         end
       end
     end
