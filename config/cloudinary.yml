@@ -1,0 +1,18 @@
+development:
+  cloud_name: 'devsicommerce'
+  api_key: '464867799166842'
+  api_secret: DQ7i2qT_uSCzBU5ZmTTTsBTeFCA
+  enhance_image_tag: true
+  static_file_support: false
+production:
+  cloud_name: 'devsicommerce'
+  api_key: '464867799166842'
+  api_secret: DQ7i2qT_uSCzBU5ZmTTTsBTeFCA
+  enhance_image_tag: true
+  static_file_support: true
+test:
+  cloud_name: 'devsicommerce'
+  api_key: '464867799166842'
+  api_secret: DQ7i2qT_uSCzBU5ZmTTTsBTeFCA
+  enhance_image_tag: true
+  static_file_support: false
