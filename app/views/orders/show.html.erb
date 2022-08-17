@@ -16,7 +16,7 @@
   <% end %>
   <br/>
   <h3>Enter Promo Code: </h3>
-  <%= form_tag(find_cupon_product_cart_order_checkout_index_path(@order, @cart, params[:product_id]), remote: true) do %>
+  <%= form_tag(find_cupon_product_cart_order_path(@order, @cart, params[:product_id]), remote: true) do %>
     <%= text_field_tag :promo_code %>
     <%= submit_tag "Enter" %>
   <% end %>

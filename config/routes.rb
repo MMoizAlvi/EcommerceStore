@@ -15,10 +15,9 @@ Rails.application.routes.draw do
     resources :carts do
 
       resources :orders do
-        resources :checkout do
-          collection do
-            post 'find_cupon'
-          end
+        resources :checkout, only: [:create]
+        member do
+          post 'find_cupon'
         end
       end
     end

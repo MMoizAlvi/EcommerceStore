@@ -6,17 +6,10 @@ RSpec.describe "Orders", type: :request do
   let(:cart) { FactoryBot.create(:cart) }
   let(:product) { FactoryBot.create(:product, user: user) }
   let(:order) { FactoryBot.create(:order, user: user) }
-
-  describe "GET new" do
-    it 'test new order method user signed in' do
-      sign_in(user)
-      get new_product_cart_order_path(cart, product), params: { order: { user: user }, format: :json }
-      expect(response).to have_http_status(204)
-    end
-  end
+  let(:cupon) {FactoryBot.create(:cupon)}
 
   describe "POST create" do
-    it 'create order when user signed in' do
+    it 'create order and check response when user signed in' do
       sign_in(user)
       post product_cart_orders_path(cart, product)
       expect(response).to have_http_status(:redirect)
@@ -38,10 +31,49 @@ RSpec.describe "Orders", type: :request do
     end
   end
 
+  describe "GET new" do
+    it 'test new order method user signed in' do
+      sign_in(user)
+      get new_product_cart_order_path(cart, product), params: { order: { user: user }, format: :json }
+      expect(response).to have_http_status(204)
+    end
+  end
+
+  describe "POST find_cupon" do
+    it 'finding valid cupon' do
+      sign_in(user)
+      cupon
+      post find_cupon_product_cart_order_path(product, order, cart), params: { promo_code: "AZADI" }
+      expect(response).to have_http_status(:redirect)
+    end
+
+    it 'finding valid cupon' do
+      sign_in(user)
+      cupon
+      post find_cupon_product_cart_order_path(product, order, cart), params: { promo_code: "AzADI" }
+      expect(response).to have_http_status(:redirect)
+      expect(flash[:notice]).to eq("Invalid Promo code!")
+    end
+
+    it 'finding valid cupon failed' do
+      sign_in(user)
+      post find_cupon_product_cart_order_path(product, order, cart)
+      expect(response).to have_http_status(:redirect)
+      expect(flash[:notice]).to eq("Invalid Promo code!")
+    end
+
+     it 'cupon failed when user not sign_in' do
+      post find_cupon_product_cart_order_path(product, order, cart)
+      expect(response).to have_http_status(:redirect)
+      expect(flash[:notice]).to eq('Please sign_in/sign_up first!')
+    end
+  end
+
   describe "GET show" do
     it 'shows order to current user' do
       sign_in(user)
       get product_cart_order_path(cart, product, order)
+      expect(order.total_amount).to eq(10000)
       expect(response).to have_http_status(:ok)
     end
 
