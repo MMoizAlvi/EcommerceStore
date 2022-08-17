@@ -2,9 +2,8 @@ require 'rails_helper'
 
 RSpec.describe "Orders", type: :request do
   let(:user) { FactoryBot.create(:user) }
-  let(:user_test) { FactoryBot.create(:user) }
   let(:cart) { FactoryBot.create(:cart) }
-  let(:product) { FactoryBot.create(:product, user: user) }
+  let(:product) { FactoryBot.create(:product) }
   let(:order) { FactoryBot.create(:order, user: user) }
   let(:cupon) {FactoryBot.create(:cupon)}
 
@@ -40,32 +39,41 @@ RSpec.describe "Orders", type: :request do
   end
 
   describe "POST find_cupon" do
-    it 'finding valid cupon' do
-      sign_in(user)
-      cupon
-      post find_cupon_product_cart_order_path(product, order, cart), params: { promo_code: "AZADI" }
-      expect(response).to have_http_status(:redirect)
-    end
-
-    it 'finding valid cupon' do
-      sign_in(user)
-      cupon
-      post find_cupon_product_cart_order_path(product, order, cart), params: { promo_code: "AzADI" }
-      expect(response).to have_http_status(:redirect)
-      expect(flash[:notice]).to eq("Invalid Promo code!")
-    end
-
-    it 'finding valid cupon failed' do
-      sign_in(user)
-      post find_cupon_product_cart_order_path(product, order, cart)
-      expect(response).to have_http_status(:redirect)
-      expect(flash[:notice]).to eq("Invalid Promo code!")
-    end
-
-     it 'cupon failed when user not sign_in' do
+    it 'cupon failed when user not sign_in' do
       post find_cupon_product_cart_order_path(product, order, cart)
       expect(response).to have_http_status(:redirect)
       expect(flash[:notice]).to eq('Please sign_in/sign_up first!')
+    end
+
+    it 'finding valid cupon' do
+      sign_in(user)
+      cupon
+      post find_cupon_product_cart_order_path(product, order, cart), params: { promo_code: 'AZADI' }
+      expect(response).to have_http_status(:redirect)
+    end
+
+    it 'finding valid cupon with failed regex' do
+      sign_in(user)
+      cupon
+      post find_cupon_product_cart_order_path(product, order, cart), params: { promo_code: 'AzAdI' }
+      expect(response).to have_http_status(:redirect)
+      expect(flash[:notice]).to eq('Invalid Promo code!')
+    end
+
+    it 'invalid cupon valid til' do
+      sign_in(user)
+      cupon.valid_til = Time.now - 35.days
+      cupon.save
+      post find_cupon_product_cart_order_path(product, order, cart), params: { promo_code: 'AZADI' }
+      expect(response).to have_http_status(:redirect)
+      expect(flash[:notice]).to eq('Invalid Promo code!')
+    end
+
+    it 'invalid cupon when cupon is nil' do
+      sign_in(user)
+      post find_cupon_product_cart_order_path(product, order, cart)
+      expect(response).to have_http_status(:redirect)
+      expect(flash[:notice]).to eq('Invalid Promo code!')
     end
   end
 
