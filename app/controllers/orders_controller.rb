@@ -24,8 +24,8 @@ class OrdersController < ApplicationController
     cupon = Cupon.find_by(promo_code: params[:promo_code])
     if !cupon.nil? && cupon.valid_til > Time.zone.now && params[:promo_code].match(/^\d*[A-Z][A-Z0-9]*$/)
       @valid_cupon = cupon
-      @order.discounted_amount = @order.total_amount * @valid_cupon.discount_rate / 100
-      @order.discounted_amount = @order.total_amount - @order.discounted_amount
+      @order.discounted_amount = @order.total_amount.to_i * @valid_cupon.discount_rate / 100
+      @order.discounted_amount = @order.total_amount.to_i - @order.discounted_amount
       @order.save
     else
       flash[:notice] = 'Invalid Promo code!'
