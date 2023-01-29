@@ -1,13 +1,11 @@
+# frozen_string_literal: true
+
 class ProductPolicy < ApplicationPolicy
   class Scope < Scope
-    # NOTE: Be explicit about which records you allow access to!
-    # def resolve
-    #   scope.all
-    # end
   end
 
   def create?
-    user == nil || user.id != record.user_id
+    user.nil? || user.id != record.user_id
   end
 
   def destroy?

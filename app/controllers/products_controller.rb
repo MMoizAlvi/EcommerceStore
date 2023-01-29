@@ -1,28 +1,31 @@
+# frozen_string_literal: true
+
 class ProductsController < ApplicationController
-  before_action :find_product, only: [ :show, :edit, :destroy, :update, :set_serial_no ]
-  after_action :set_serial_no, only: [ :create ]
-  before_action :authorize_product, only: [ :destroy, :edit ]
+  before_action :find_product, only: %i[show edit destroy update set_serial_no]
+  before_action :authorize_product, only: %i[destroy edit]
 
   def new
     @product = Product.new
   end
 
   def index
-    search = params[:name].present? ? params[:name] : nil
+    search = params[:name].presence
     @products = if search
-      Product.search(search)
-    else
-      Product.all
-    end
+                  Product.text_search(params[:name])
+                else
+                  Product.all
+                end
   end
 
   def create
     @product = current_user.products.new(product_params)
+    @product.serial_no = rand 1..10000
     if @product.save
-      flash[:success] = 'Product created successfully!'
+      flash[:notice] = 'Product created successfully!'
       redirect_to product_path(@product)
     else
-      render :new
+      flash[:notice] = "#{@product.errors.full_messages.to_sentence}"
+      redirect_to new_product_path
     end
   end
 
@@ -32,8 +35,8 @@ class ProductsController < ApplicationController
       flash[:success] = 'Product successfully updated!'
       redirect_to product_path(@product)
     else
-      flash[:error] = 'Something went wrong'
-      render :edit
+      flash[:notice] = "#{@product.errors.full_messages.to_sentence}"
+      redirect_to product_path(@product)
     end
   end
 
@@ -42,20 +45,18 @@ class ProductsController < ApplicationController
     redirect_to @product
   end
 
-  def edit
-  end
+  def edit; end
 
-  def show
-  end
+  def show; end
 
   def autocomplete
     render json: Product.search(params[:query], {
-      fields: ["name"],
-      match: :words_start,
-      limit: 10,
-      load: false,
-      misspellings: {below: 5}
-    }).map(&:name)
+                                  fields: ['name'],
+                                  match: :words_start,
+                                  limit: 10,
+                                  load: false,
+                                  misspellings: { below: 5 }
+                                }).map(&:name)
   end
 
   private
@@ -65,12 +66,7 @@ class ProductsController < ApplicationController
   end
 
   def find_product
-    @product =  Product.find(params[:id])
-  end
-
-  def set_serial_no
-    @product.serial_no = @product.id
-    @product.save
+    @product = Product.find(params[:id])
   end
 
   def authorize_product

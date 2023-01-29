@@ -21,8 +21,11 @@
     <%= submit_tag "Enter" %>
   <% end %>
   <br/>
+  <h5>Total Amount: <%= @order.total_amount %></h5> <br/>
   <h5>Discounted Amount: <%= @order.discounted_amount.to_i %></h5>
-  <h5>Total Payable: <%= @order.total_amount %></h5> <br/>
+  <% if @order.discounted_amount.to_i > 0 %>
+    <h5>Total Payable: <%= @order.discounted_amount %></h5> <br/>
+  <% end %>
   <div class="btn btn-primary">
     <%= link_to "back to products", products_path , class: "btn btn-primary"%>
   </div>
