@@ -23,7 +23,7 @@ class Product < ApplicationRecord
     if query.present?
       search(query)
     else
-      scoped
+      Product.all
     end
   end
 end

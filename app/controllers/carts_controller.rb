@@ -2,8 +2,8 @@
 
 class CartsController < ApplicationController
   before_action :find_product, only: %i[create]
-  before_action :user_cart, only: %i[remove_from_cart show update create]
-  before_action :find_cart_products, only: %i[remove_from_cart update]
+  before_action :user_cart, only: %i[destroy show update create]
+  before_action :find_cart_products, only: %i[destroy update]
 
   def create
     cart_product = @cart.cart_products.build(cart: @cart, product: @product, quantity: 1)
@@ -12,18 +12,18 @@ class CartsController < ApplicationController
       flash[:notice] = 'Added to cart!'
       redirect_to product_cart_path(@cart, @product)
     else
-      flash.now[:error] = "#{@cart.cart_product.errors.full_messages.to_sentence}"
-      render :new
+      flash[:notice] = cart_product.errors.full_messages.to_sentence
+      redirect_to product_cart_path(@cart, @product)
     end
   end
 
-  def remove_from_cart
+  def destroy
     if @cart_product.destroy
       flash[:notice] = 'Product removed from cart!'
       redirect_to product_cart_path(@cart, params[:product])
     else
-      flash.now[:error] = "#{@cart_product.errors.full_messages.to_sentence}"
-      render :edit
+      flash[:notice] = @cart_product.errors.full_messages.to_sentence
+      redirect_to product_cart_path(@cart, params[:product])
     end
   end
 
@@ -33,17 +33,12 @@ class CartsController < ApplicationController
       flash[:notice] = 'cart updated!'
       redirect_to product_cart_path(@cart, params[:product])
     else
-      flash.now[:error] = "#{@cart_product.errors.full_messages.to_sentence}"
-      render :edit
+      flash[:notice] = @cart_product.errors.full_messages.to_sentence
+      redirect_to product_cart_path(@cart, params[:product])
     end
   end
 
-  def show
-    if @cart.nil?
-      flash[:notice] = 'Your cart is empty!'
-      redirect_to products_path
-    end
-  end
+  def show; end
 
   private
 
@@ -59,4 +54,3 @@ class CartsController < ApplicationController
     @cart_product = @cart.cart_products.find_by(product: params[:product])
   end
 end
-

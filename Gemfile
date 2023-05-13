@@ -14,12 +14,17 @@ gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.5'
 gem 'jquery-rails', '~> 4.3', '>= 4.3.3'
 gem 'rails-ujs', '~> 0.1.0'
-# gem 'mini_magick', '~> 4.8'
 gem 'image_processing', '~> 1.12', '>= 1.12.2'
 gem 'bootsnap', '>= 1.1.0', require: false
 
 group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
+  gem 'rspec-rails'
+  gem 'factory_bot_rails'
+  gem 'shoulda-matchers'
+  gem 'faker'
+  gem 'rubocop-rspec'
+  gem 'rexml'
 end
 
 group :development do
@@ -31,8 +36,11 @@ end
 
 group :test do
   gem 'capybara', '>= 2.15'
+  gem 'simplecov'
   gem 'selenium-webdriver'
-  gem 'chromedriver-helper'
+  gem 'webdrivers'
+  gem 'rails-controller-testing'
+  # gem 'chromedriver-helper'
 end
 
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]

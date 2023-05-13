@@ -5,7 +5,11 @@
     Guest User Cart
   <% end %>
   <div >
-    <%= button_to "Proceed to Checkout", product_cart_orders_path(params[:product_id], params[:id]), method: "post", class: "btn btn-warning" %><br/>
+    <%= button_to "Proceed to Checkout", product_cart_orders_path(params[:product_id], params[:id]),
+     method: "post",
+      class: "btn btn-warning"
+    %>
+    <br/>
   </div>
     <% @cart.products.each do |product| %>
     <div class="cart">
@@ -16,7 +20,7 @@
         Quantity: <%= @cart.cart_products.find_by(product_id: product).quantity %>
       </div>
       <div>
-        <%= button_to "Remove from Cart", remove_from_cart_product_cart_path(product: product, cart: @cart) %>
+        <%= button_to "Remove from Cart", product_cart_path(product: product, cart: @cart), method: :delete %>
         <%= form_tag product_cart_path(@cart, product), method: "patch" do %>
           <%= select_tag 'quantity', options_for_select(0..5, 'quantity') %>
           <%= hidden_field_tag 'product', product.id %>
