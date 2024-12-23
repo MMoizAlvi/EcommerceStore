@@ -1,4 +1,4 @@
-# Rubu On Rails - E-Commerce Website with Stripe Integration
+# Ruby On Rails - E-Commerce Website with Stripe Integration
 
 This is an eCommerce website built using Ruby on Rails (RoR) with Stripe integration for payment processing. It provides a simple and secure shopping cart experience for users, allowing them to browse products, add items to their cart, and complete their purchase with Stripe.
 
