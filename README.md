@@ -1,4 +1,4 @@
-# eCommerce Website with Stripe Integration
+# Rubu On Rails - E-Commerce Website with Stripe Integration
 
 This is an eCommerce website built using Ruby on Rails (RoR) with Stripe integration for payment processing. It provides a simple and secure shopping cart experience for users, allowing them to browse products, add items to their cart, and complete their purchase with Stripe.
 
@@ -16,11 +16,3 @@ This is an eCommerce website built using Ruby on Rails (RoR) with Stripe integra
 - Rails version: `6.x.x`
 - Stripe Account: You'll need a [Stripe account](https://stripe.com/) to integrate payments.
 - PostgreSQL (or another database of your choice)
-
-## Installation
-
-### Clone the Repository
-
-```bash
-git clone https://github.com/yourusername/your-ecommerce-repo.git
-cd your-ecommerce-repo
