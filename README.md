@@ -1,24 +1,26 @@
-# README
+# eCommerce Website with Stripe Integration
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This is an eCommerce website built using Ruby on Rails (RoR) with Stripe integration for payment processing. It provides a simple and secure shopping cart experience for users, allowing them to browse products, add items to their cart, and complete their purchase with Stripe.
 
-Things you may want to cover:
+## Features
 
-* Ruby version
+- **Product Listings**: Display products with details like price, description, and images.
+- **Shopping Cart**: Add, remove, and update items in the shopping cart.
+- **Checkout Process**: Secure checkout flow with Stripe payment integration.
+- **Order Confirmation**: Receive a confirmation after a successful payment.
+- **Admin Panel**: Manage products and view orders.
+  
+## Prerequisites
 
-* System dependencies
+- Ruby version: `2.x.x`
+- Rails version: `6.x.x`
+- Stripe Account: You'll need a [Stripe account](https://stripe.com/) to integrate payments.
+- PostgreSQL (or another database of your choice)
 
-* Configuration
+## Installation
 
-* Database creation
+### Clone the Repository
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+```bash
+git clone https://github.com/yourusername/your-ecommerce-repo.git
+cd your-ecommerce-repo
