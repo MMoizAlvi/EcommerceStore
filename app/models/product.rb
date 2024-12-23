@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Product < ApplicationRecord
   searchkick
   belongs_to :user
@@ -11,5 +13,5 @@ class Product < ApplicationRecord
   validates :name, :price, :description, presence: true
   validates :name, length: { in: 3..10 }
   validates :description, length: { in: 5..40 }
-  validates :price, numericality: { greater_than: 0, less_than: 1000000 }
+  validates :price, numericality: { greater_than: 0, less_than: 1_000_000 }
 end

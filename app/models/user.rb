@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
@@ -9,26 +11,31 @@ class User < ApplicationRecord
   has_one :cart, dependent: :destroy
   has_one_attached :avatar
   after_commit :add_default_avatar, on: %i[create update]
+  # after_create :create_user_cart
 
   def avatar_thumbnail
     if avatar.attached?
-      avatar.variant(resize: "60x60!").processed
+      avatar.variant(resize: '70x70!').processed.service_url
     else
-      '/default_profile.jpg'
+      '/default.jpg'
     end
   end
 
   private
+
+  # def create_user_cart
+  #   Cart.create(user: self)
+  # end
 
   def add_default_avatar
     unless avatar.attached?
       avatar.attach(
         io: File.open(
           Rails.root.join(
-            'app', 'assets', 'images', 'default_profile.jpg'
+            'app', 'assets', 'images', 'default.jpg'
           )
         ),
-        filename: 'default_profile.jpg',
+        filename: 'default.jpg',
         content_type: 'image/jpg'
       )
     end

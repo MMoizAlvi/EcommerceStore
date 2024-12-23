@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ProductPolicy < ApplicationPolicy
   class Scope < Scope
     # NOTE: Be explicit about which records you allow access to!
@@ -7,7 +9,7 @@ class ProductPolicy < ApplicationPolicy
   end
 
   def create?
-    user == nil || user.id != record.user_id
+    user.nil? || user.id != record.user_id
   end
 
   def destroy?
