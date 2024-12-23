@@ -1,0 +1,10 @@
+<%= form_for([@product, @product.comments.build], remote: true, id: "comments-form") do |form| %>
+  <div class= "from">
+    <div>
+      <%= form.text_area :body, class: "form-control-lg" %>
+    </div>
+    <div class="submit">
+      <%= form.submit%>
+    </div>
+  </div>
+<% end %>

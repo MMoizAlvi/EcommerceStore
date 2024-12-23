@@ -1,0 +1,33 @@
+<div class = "home">
+  <div class="home-btn">
+    <%= link_to "Create your own product!", new_product_path, class: "btn btn-primary"%>
+  </div>
+</div>
+<h1 class="product">All Products</h1>
+<div >
+  <% @products.each do |product| %>
+    <div class="container">
+      <ul>
+        <div class="img">
+          <% ( 0...1 ).each do |img| %>
+            <div class="card-img-top", style="width: 400px; height:400px; display: inline-block;" >
+                <%= cl_image_tag(product.imgs[img].key, style: 'width:100%') if product.imgs.attached?  %>
+            </div>
+          <% end %>
+        </div>
+        <div>
+          <li>
+            <h5>listing name: </h5><%= link_to product.name, product_path(product) %>
+            <h5>Serial_no: dev-<%= product.serial_no %></h5>
+            <h5>Price: </h5><%= product.price %>$
+            <h5>Description: </h5><%= product.description %>
+            <h5>Reviews:</h5>
+            <% product.comments.each do |comment| %>
+              <%= comment.body %><br/>
+            <% end %>
+          </li>
+        </div>
+      </ul>
+    </div>
+  <% end %>
+</div>

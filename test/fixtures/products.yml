@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  serial_no: 1
+  name: MyString
+  price: 1.5
+  description: MyText
+  images: MyString
+  user: one
+
+two:
+  serial_no: 1
+  name: MyString
+  price: 1.5
+  description: MyText
+  images: MyString
+  user: two

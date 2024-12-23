@@ -1,0 +1,31 @@
+<div class="container">
+  <% if signed_in? %>
+    <%= current_user.email %> Cart
+  <% else %>
+    Guest User Cart
+  <% end %>
+  <div >
+    <%= button_to "Proceed to Checkout", product_cart_orders_path(params[:product_id], params[:id]), method: "post", class: "btn btn-warning" %><br/>
+  </div>
+    <% @cart.products.each do |product| %>
+    <div class="cart">
+      <div>
+        Product Name: <%= product.name %><br />
+        Price: <%= product.price %><br />
+        Description: <%= product.description %><br />
+        Quantity: <%= @cart.cart_products.find_by(product_id: product).quantity %>
+      </div>
+      <div>
+        <%= button_to "Remove from Cart", remove_from_cart_product_cart_path(product: product, cart: @cart) %>
+        <%= form_tag product_cart_path(@cart, product), method: "patch" do %>
+          <%= select_tag 'quantity', options_for_select(0..5, 'quantity') %>
+          <%= hidden_field_tag 'product', product.id %>
+          <%= submit_tag("Update Cart")%>
+        <% end %>
+      </div>
+    </div>
+    <% end %>
+  <div class="btn btn-primary">
+    <%= link_to "back to products", products_path , class: "btn btn-primary"%>
+  </div>
+</div>

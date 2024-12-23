@@ -1,0 +1,32 @@
+<div class="container">
+
+  <h4><%= current_user.email %> Your Order </h4>
+  <br/>
+  <%= button_to "Buy Now!",
+      product_cart_order_checkout_index_path(@order, @cart, params[:product_id]),
+      method: "post",
+      remote: true,
+      class: "btn btn-warning"
+  %>
+  <% @cart.products.each do |product| %>
+    Product Name: <%= product.name %><br />
+    Price: <%= product.price %><br />
+    Quantity: <%= @cart.cart_products.find_by(product_id: product).quantity %> <br/>
+    <h4>ItemTotal: <%= @cart.cart_products.find_by(product_id: product).quantity*product.price %> </h4>
+  <% end %>
+  <br/>
+  <h3>Enter Promo Code: </h3>
+  <%= form_tag(find_cupon_product_cart_order_path(@order, @cart, params[:product_id]), remote: true) do %>
+    <%= text_field_tag :promo_code %>
+    <%= submit_tag "Enter" %>
+  <% end %>
+  <br/>
+  <h5>Total Amount: <%= @order.total_amount %></h5> <br/>
+  <h5>Discounted Amount: <%= @order.discounted_amount.to_i %></h5>
+  <% if @order.discounted_amount.to_i > 0 %>
+    <h5>Total Payable: <%= @order.discounted_amount %></h5> <br/>
+  <% end %>
+  <div class="btn btn-primary">
+    <%= link_to "back to products", products_path , class: "btn btn-primary"%>
+  </div>
+</div>
